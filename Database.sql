@@ -200,6 +200,16 @@ RIGHT JOIN movies ON moviegenre.movieId = movies.movieId
 GROUP BY title
 ORDER BY title;
 
+-- -----------------------------------------------------
+-- View 3
+-- -----------------------------------------------------
+CREATE VIEW notReturnedMovies AS
+SELECT movies.title, orderrows.isReturned, CONCAT(employees.firstName," ",employees.lastName) AS employee, customers.email FROM
+movies RIGHT JOIN orderrows ON movies.movieId = orderrows.movieId
+LEFT JOIN orders ON orderrows.orderId=orders.orderId
+LEFT JOIN employees ON orders.employeeId=employees.employeeId
+LEFT JOIN customers ON orders.customerId=customers.customerId
+WHERE orderrows.isReturned=0;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
