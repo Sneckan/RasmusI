@@ -211,6 +211,16 @@ LEFT JOIN employees ON orders.employeeId=employees.employeeId
 LEFT JOIN customers ON orders.customerId=customers.customerId
 WHERE orderrows.isReturned=0;
 
+-- -----------------------------------------------------
+-- View 4
+-- -----------------------------------------------------
+CREATE VIEW overtimeNotReturnedMovies AS
+SELECT movies.title, orders.returnDate, NOW() AS currentDate, orderrows.isReturned
+FROM
+orders LEFT JOIN orderrows ON orders.orderId=orderrows.orderId
+LEFT JOIN movies ON orderrows.movieId=movies.movieId
+WHERE NOW()>orders.returnDate AND orderrows.isReturned =0;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
