@@ -190,6 +190,18 @@ FROM
 movies LEFT JOIN directors ON movies.directorId = directors.directorId
 ORDER BY title;
 
+
+-- -----------------------------------------------------
+-- View 2
+-- -----------------------------------------------------
+CREATE VIEW genres AS
+SELECT GROUP_CONCAT(moviegenre.genre SEPARATOR ' ') AS genre,movies.title FROM moviegenre
+RIGHT JOIN movies ON moviegenre.movieId = movies.movieId
+GROUP BY title
+ORDER BY title;
+
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
