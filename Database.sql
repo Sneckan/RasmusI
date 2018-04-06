@@ -181,6 +181,14 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_swedish_ci;
 
+-- -----------------------------------------------------
+-- View 1
+-- -----------------------------------------------------
+CREATE VIEW ownedMovies AS
+SELECT title,releaseDate,description,CONCAT(directors.firstName," ",directors.lastName) as director
+FROM 
+movies LEFT JOIN directors ON movies.directorId = directors.directorId
+ORDER BY title;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
