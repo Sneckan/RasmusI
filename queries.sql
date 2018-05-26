@@ -7,13 +7,17 @@ SELECT * FROM ownedmovies;
 SELECT * FROM genres;
 -- visar alla filmer med deras genres
 
-SELECT * FROM genres
-WHERE genre LIKE "%Fantasy%";
+SELECT * FROM genres_fantasy;
 -- visar alla med genren Fantasy, i det här fallet bara Thor
 
-SELECT * FROM genres
-WHERE genre LIKE "%Sci-Fi%";
+SELECT * FROM genres_scifi;
 -- visar alla med genren Sci-Fi, i det här fallet alla utom Thor
+
+SELECT * FROM genres_action;
+-- visar alla med genren action, i det här fallet alla
+
+SELECT * FROM genres_adventure;
+-- visar alla med genren adventure, i det här fallet alla
 
 
 -- 3
@@ -43,3 +47,6 @@ select * from orders;
 -- visar att en beställningen laggts till
 select * from orderrows;
 -- visar att beställningen har en film
+
+
+-- Angående frågan om orderrows tabellen är den mer för att koppla flera filmer till samma order, ifall man ville låna flera filmer samtidigt
