@@ -171,6 +171,58 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `genres_action`
+--
+
+DROP TABLE IF EXISTS `genres_action`;
+/*!50001 DROP VIEW IF EXISTS `genres_action`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `genres_action` AS SELECT 
+ 1 AS `genre`,
+ 1 AS `title`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `genres_adventure`
+--
+
+DROP TABLE IF EXISTS `genres_adventure`;
+/*!50001 DROP VIEW IF EXISTS `genres_adventure`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `genres_adventure` AS SELECT 
+ 1 AS `genre`,
+ 1 AS `title`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `genres_fantasy`
+--
+
+DROP TABLE IF EXISTS `genres_fantasy`;
+/*!50001 DROP VIEW IF EXISTS `genres_fantasy`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `genres_fantasy` AS SELECT 
+ 1 AS `genre`,
+ 1 AS `title`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `genres_scifi`
+--
+
+DROP TABLE IF EXISTS `genres_scifi`;
+/*!50001 DROP VIEW IF EXISTS `genres_scifi`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `genres_scifi` AS SELECT 
+ 1 AS `genre`,
+ 1 AS `title`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `moviegenre`
 --
 
@@ -330,6 +382,35 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Dumping routines for database 'rasmusi'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `loanMovie` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loanMovie`(orId int(11),in cuId int(11),emId int(11),moId int(11),adrs varchar(45))
+begin
+insert into orders(adress,employeeId,customerId,sendDate,returnDate)
+select * from(select adrs,emId,cuId,now(),now()+ interval 4 day) as tmp
+where not exists(select orderId from orders where orderId=orId)
+limit 1;
+insert into orderrows(isReturned,orderId,movieId)
+values (0,orId,moId);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Final view structure for view `employeemovies`
 --
 
@@ -361,6 +442,78 @@ SET character_set_client = @saved_cs_client;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `genres` AS select group_concat(`moviegenre`.`genre` separator ' ') AS `genre`,`movies`.`title` AS `title` from (`movies` left join `moviegenre` on((`moviegenre`.`movieId` = `movies`.`movieId`))) group by `movies`.`title` order by `movies`.`title` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `genres_action`
+--
+
+/*!50001 DROP VIEW IF EXISTS `genres_action`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `genres_action` AS select `genres`.`genre` AS `genre`,`genres`.`title` AS `title` from `genres` where (`genres`.`genre` like '%Action%') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `genres_adventure`
+--
+
+/*!50001 DROP VIEW IF EXISTS `genres_adventure`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `genres_adventure` AS select `genres`.`genre` AS `genre`,`genres`.`title` AS `title` from `genres` where (`genres`.`genre` like '%SAdventure%') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `genres_fantasy`
+--
+
+/*!50001 DROP VIEW IF EXISTS `genres_fantasy`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `genres_fantasy` AS select `genres`.`genre` AS `genre`,`genres`.`title` AS `title` from `genres` where (`genres`.`genre` like '%Fantasy%') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `genres_scifi`
+--
+
+/*!50001 DROP VIEW IF EXISTS `genres_scifi`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `genres_scifi` AS select `genres`.`genre` AS `genre`,`genres`.`title` AS `title` from `genres` where (`genres`.`genre` like '%Sci-Fi%') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -428,4 +581,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08 13:19:41
+-- Dump completed on 2018-05-26 17:40:45
